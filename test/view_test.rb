@@ -2,6 +2,27 @@ require File.join(File.dirname(__FILE__), 'test_helper')
 
 class ViewTest < Test::Unit::TestCase
 
+  def test_tab_scope_helper
+    view            = YeOldeView.new
+    view.controller = controller = StuffController.new
+
+    simple = view.content_tag(:li, :id => 'admin_users_tab') do
+      view.link_to('Users', '/admin/users/')
+    end
+
+    complex = view.content_tag(:li, :id => 'a_b_c_d_tab') do
+      view.link_to('D', '/a/b/c/d/')
+    end
+
+    view.tabs_for :admin do |admin|
+      assert_equal simple, admin.tab('/admin/users/', :users)
+    end
+
+    view.tabs_for :a => :b do |ab|
+      assert_equal complex, ab.tab('/a/b/c/d/', ['c', 'd'])
+    end
+  end
+
   def test_of_builtin_tab_helper
     view            = YeOldeView.new
     view.controller = controller = StuffController.new

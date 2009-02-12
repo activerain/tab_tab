@@ -80,5 +80,32 @@ module TabTab #:nodoc:
 
       [ html, tab.name, tab_active ].extend TabHelperHelperReturnDecoration
     end
+
+    class TabScope #:nodoc:
+      attr_accessor :view #:nodoc:
+      attr_accessor :path #:nodoc:
+
+      def tab(url, tab_literal, opts = nil) #:nodoc:
+        view.tab(url, (path + Tab.new(tab_literal).nested_path), opts)
+      end
+    end
+
+    # Use in your views when you need to render several tabs with similar
+    # nested levels, like so:
+    #
+    #   <ul id="warehouse_tabs">
+    #     <% tabs_for :warehouse do |warehouse| %>
+    #       <%= warehouse.tab('/foo', :projections) -%>
+    #       <%= warehouse.tab('/bar', :capacity)    -%>
+    #     <% end %>
+    #   </ul>
+    #
+    def tabs_for(*tab_literal_scope, &block)
+      scope      = TabScope.new
+      scope.path = Tab.new(tab_literal_scope).nested_path
+      scope.view = self
+
+      block.call scope
+    end
   end
 end

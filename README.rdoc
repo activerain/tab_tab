@@ -36,6 +36,16 @@ And on the view (notice the two levels of "active"):
     <%= tab('/a/h', :animals => :hippos)    -%>
   </ul>
 
+You can also nest in the view using the +tabs_for+ helper. The example
+above would become:
+
+  <ul id="second-level-tabs">
+    <% tabs_for :animals do |animal| %>
+      <%= animal.tab('/a/e', :elephants) -%>  # <li class="active">...
+      <%= animal.tab('/a/h', :hippos)    -%>
+    <% end %>
+  </ul>
+
 And you can also call the +tab+ method at "runtime" on your controllers
 (which means you can use it on before_filters, and/or with custom if/unless
 branch logic based on request parameters), like so:
