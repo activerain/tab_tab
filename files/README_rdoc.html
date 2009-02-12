@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>File: README.rdoc [tab_tab]</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='.././rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='file' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>README.rdoc</h1>
+        <div class='paths'>
+          README.rdoc
+        </div>
+        <div class='last-update'>
+          Last Update:
+          <span class='datetime'>Thu Feb 12 15:54:32 -0500 2009</span>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <p>
+            <tt>tab_tab</tt> is an MVC-violating (there, you&#8217;ve been warned)
+            plugin that allows for easy tabbed navigation, without forcing your
+            controllers to be named in any given way.
+            </p>
+            <p>
+            It makes for very clean views with zero tab navigation logic. On your
+            controllers:
+            </p>
+            <pre>class ElephantsController &lt; ApplicationController&#x000A;&#x000A;  tab :elephants&#x000A;end</pre>
+            <p>
+            On your views:
+            </p>
+            <pre>&lt;ul&gt;&#x000A;  &lt;%= tab('/e', :elephants) -%&gt;  # This will be &lt;li class=&quot;active&quot;&gt;...&#x000A;  &lt;%= tab('/h', :hippos)    -%&gt;&#x000A;&lt;/ul&gt;</pre>
+            <p>
+            That&#8217;s the simplest case. You can also nest:
+            </p>
+            <pre>class ElephantsController &lt; ApplicationController&#x000A;&#x000A;  tab :animals =&gt; :elephants  # or tab 'animals', 'elephants'&#x000A;end</pre>
+            <p>
+            And on the view (notice the two levels of &#8220;active&#8221;):
+            </p>
+            <pre>&lt;ul id=&quot;first-level-tabs&quot;&gt;&#x000A;  &lt;%= tab('/a', :animals) -%&gt;  # &lt;li class=&quot;active&quot;&gt;...&#x000A;  &lt;%= tab('/p', :plants)  -%&gt;&#x000A;&lt;/ul&gt;&#x000A;&#x000A;&lt;ul id=&quot;second-level-tabs&quot;&gt;&#x000A;  &lt;%= tab('/a/e', :animals =&gt; :elephants) -%&gt;  # &lt;li class=&quot;active&quot;&gt;...&#x000A;  &lt;%= tab('/a/h', :animals =&gt; :hippos)    -%&gt;&#x000A;&lt;/ul&gt;</pre>
+            <p>
+            You can also nest in the view using the <tt>tabs_for</tt> helper. The
+            example above would become:
+            </p>
+            <pre>&lt;ul id=&quot;second-level-tabs&quot;&gt;&#x000A;  &lt;% tabs_for :animals do |animal| %&gt;&#x000A;    &lt;%= animal.tab('/a/e', :elephants) -%&gt;  # &lt;li class=&quot;active&quot;&gt;...&#x000A;    &lt;%= animal.tab('/a/h', :hippos)    -%&gt;&#x000A;  &lt;% end %&gt;&#x000A;&lt;/ul&gt;</pre>
+            <p>
+            And you can also call the <tt>tab</tt> method at &#8220;runtime&#8221; on
+            your controllers (which means you can use it on before_filters, and/or with
+            custom if/unless branch logic based on request parameters), like so:
+            </p>
+            <pre>class ElephantsController &lt; ApplicationController&#x000A;&#x000A;  tab :animals =&gt; :elephants&#x000A;&#x000A;  def edit&#x000A;    tab :animals =&gt; { :elephants =&gt; :edit }&#x000A;  end&#x000A;end</pre>
+            <p>
+            The <tt>tab</tt> helper in the view is hardcoded to produce an HTML list
+            element with a link inside. Overriding it is easy, since it actually
+            delegates all of the who&#8217;s-the-current-tab logic to the unfortunately
+            named <tt>tab_helper_helper</tt> method (See <a
+            href="../classes/TabTab/ViewHelpers.html">TabTab::ViewHelpers</a> for
+            more).
+            </p>
+            <p>
+            CSS is on you. Patches welcome.
+            </p>
+            <p>
+            Copyright &#169; 2009 Jordi Bunster <jordi@bunster.org>, released under the
+            MIT license
+            </p>
+          </div>
+          <div id='section'>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

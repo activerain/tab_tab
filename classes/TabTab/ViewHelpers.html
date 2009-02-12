@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>Module: TabTab::ViewHelpers [tab_tab]</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../.././rdoc-style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>Module</span>
+          TabTab::ViewHelpers
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a href="../../files/lib/tabtab_rb.html">lib/tabtab.rb</a>
+          </li>
+        </ol>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>public instance</h3>
+            <ol>
+              <li><a href="#M000001">tab</a></li>
+              <li><a href="#M000002">tab_helper_helper</a></li>
+              <li><a href="#M000003">tabs_for</a></li>
+            </ol>
+          </div>
+          <div id='section'>
+            <div id='methods'>
+              <h2>Public instance methods</h2>
+              <div class='public-instance method' id='method-M000001'>
+                <a name='M000001'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>tab</span>
+                  <span class='arguments'>(url, tab_literal, opts = nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  The tab helper. Draws an HTML list tag with a link inside, linking to the
+                  given URL.
+                  </p>
+                  <p>
+                  <tt>opts</tt> can contain:
+                  </p>
+                  <ul>
+                  <li><tt>:name</tt>: the human name of the tab
+                  
+                  </li>
+                  <li><tt>:html</tt>: a hash of HTML attributes (namely :id and :class)
+                  
+                  </li>
+                  <li><tt>:active_class</tt>: the CSS class name you want tacked on active tabs
+                  
+                  </li>
+                  </ul>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000001-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000001-source'>    <span class="ruby-comment cmt"># File lib/tabtab.rb, line 40</span>&#x000A;40:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tab</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">tab_literal</span>, <span class="ruby-identifier">opts</span> = <span class="ruby-keyword kw">nil</span>)&#x000A;41:       <span class="ruby-identifier">opts</span> = (<span class="ruby-identifier">opts</span> <span class="ruby-operator">||</span> {}).<span class="ruby-identifier">to_options</span>&#x000A;42:       <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">assert_valid_keys</span> <span class="ruby-identifier">:active_class</span>, <span class="ruby-identifier">:html</span>, <span class="ruby-identifier">:name</span>&#x000A;43: &#x000A;44:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">:name</span> <span class="ruby-comment cmt"># tab_helper_helper doesn't like :name</span>&#x000A;45:       <span class="ruby-identifier">help</span> = <span class="ruby-identifier">tab_helper_helper</span>(<span class="ruby-identifier">tab_literal</span>, <span class="ruby-identifier">opts</span>)&#x000A;46: &#x000A;47:       <span class="ruby-identifier">content_tag</span>(<span class="ruby-identifier">:li</span>, <span class="ruby-identifier">help</span>.<span class="ruby-identifier">html</span>) { <span class="ruby-identifier">link_to</span>((<span class="ruby-identifier">name</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">help</span>.<span class="ruby-identifier">name</span>), <span class="ruby-identifier">url</span>) }&#x000A;48:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000002'>
+                <a name='M000002'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>tab_helper_helper</span>
+                  <span class='arguments'>(tab_literal, opts = nil)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  This helper helper (ugh) method is used by the <tt>tab</tt> helper to
+                  modify the HTML attributes in case the tab is &#8220;active&#8221;.
+                  </p>
+                  <p>
+                  <tt>tab_literal</tt> is of the same types of literal you pass to the
+                  <tt>tab</tt> method on the controllers.
+                  </p>
+                  <p>
+                  <tt>opts</tt> can contain:
+                  </p>
+                  <ul>
+                  <li><tt>:html</tt>: a hash of HTML attributes (namely :id and :class)
+                  
+                  </li>
+                  <li><tt>:active_class</tt>: the CSS class name you want tacked on active tabs
+                  
+                  </li>
+                  </ul>
+                  <p>
+                  It returns a duck that responds to a few methods:
+                  </p>
+                  <ul>
+                  <li><tt>html</tt>: A clone of +opts[:html]+ with adjusted <tt>:class</tt>
+                  
+                  </li>
+                  <li><tt>name</tt>: A human name suggestion for the tab
+                  
+                  </li>
+                  <li><tt>active?</tt>: Returns true if the given tab literal is active right now
+                  
+                  </li>
+                  </ul>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000002-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000002-source'>    <span class="ruby-comment cmt"># File lib/tabtab.rb, line 65</span>&#x000A;65:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tab_helper_helper</span>(<span class="ruby-identifier">tab_literal</span>, <span class="ruby-identifier">opts</span> = <span class="ruby-keyword kw">nil</span>)&#x000A;66:       <span class="ruby-identifier">opts</span> = (<span class="ruby-identifier">opts</span> <span class="ruby-operator">||</span> {}).<span class="ruby-identifier">to_options</span>&#x000A;67:       <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">assert_valid_keys</span> <span class="ruby-identifier">:active_class</span>, <span class="ruby-identifier">:html</span>&#x000A;68: &#x000A;69:       <span class="ruby-identifier">tab</span>          = <span class="ruby-constant">Tab</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tab_literal</span>)&#x000A;70:       <span class="ruby-identifier">html</span>         = (<span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:html</span>] <span class="ruby-operator">||</span> {}).<span class="ruby-identifier">to_options</span>&#x000A;71:       <span class="ruby-identifier">active_class</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:active_class</span>].<span class="ruby-identifier">blank?</span> <span class="ruby-value">? </span><span class="ruby-value str">'active'</span> \&#x000A;72:                                                 <span class="ruby-operator">:</span> <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:active_class</span>]&#x000A;73:       <span class="ruby-identifier">html</span>[<span class="ruby-identifier">:id</span>]  <span class="ruby-operator">||=</span> <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">html_id</span>&#x000A;74:       <span class="ruby-identifier">tab_active</span>   = <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">current_tab</span>.<span class="ruby-identifier">activates?</span>(<span class="ruby-identifier">tab</span>)&#x000A;75: &#x000A;76:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tab_active</span>&#x000A;77:         <span class="ruby-identifier">html</span>[<span class="ruby-identifier">:class</span>] = \&#x000A;78:           [ (<span class="ruby-identifier">html</span>[<span class="ruby-identifier">:class</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>), <span class="ruby-identifier">active_class</span>.<span class="ruby-identifier">to_s</span> ].<span class="ruby-identifier">join</span>(<span class="ruby-value str">' '</span>).<span class="ruby-identifier">lstrip</span>&#x000A;79:       <span class="ruby-keyword kw">end</span>&#x000A;80: &#x000A;81:       [ <span class="ruby-identifier">html</span>, <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">tab_active</span> ].<span class="ruby-identifier">extend</span> <span class="ruby-constant">TabHelperHelperReturnDecoration</span>&#x000A;82:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+              <div class='public-instance method' id='method-M000003'>
+                <a name='M000003'>      </a>
+                <div class='synopsis'>
+                  <span class='name'>tabs_for</span>
+                  <span class='arguments'>(*tab_literal_scope, &amp;block)</span>
+                </div>
+                <div class='description'>
+                  <p>
+                  Use in your views when you need to render several tabs with similar nested
+                  levels, like so:
+                  </p>
+                  <pre>&lt;ul id=&quot;warehouse_tabs&quot;&gt;&#x000A;  &lt;% tabs_for :warehouse do |warehouse| %&gt;&#x000A;    &lt;%= warehouse.tab('/foo', :projections) -%&gt;&#x000A;    &lt;%= warehouse.tab('/bar', :capacity)    -%&gt;&#x000A;  &lt;% end %&gt;&#x000A;&lt;/ul&gt;</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('M000003-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='M000003-source'>     <span class="ruby-comment cmt"># File lib/tabtab.rb, line 103</span>&#x000A;103:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tabs_for</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">tab_literal_scope</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;104:       <span class="ruby-identifier">scope</span>      = <span class="ruby-constant">TabScope</span>.<span class="ruby-identifier">new</span>&#x000A;105:       <span class="ruby-identifier">scope</span>.<span class="ruby-identifier">path</span> = <span class="ruby-constant">Tab</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tab_literal_scope</span>).<span class="ruby-identifier">nested_path</span>&#x000A;106:       <span class="ruby-identifier">scope</span>.<span class="ruby-identifier">view</span> = <span class="ruby-keyword kw">self</span>&#x000A;107: &#x000A;108:       <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span> <span class="ruby-identifier">scope</span>&#x000A;109:     <span class="ruby-keyword kw">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>
