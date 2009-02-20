@@ -1,5 +1,4 @@
-require File.join(File.dirname(__FILE__), 'lib', 'tabtab')
-require File.join(File.dirname(__FILE__), 'lib', 'tab')
+require 'tabtab'
 
 class ActionController::Base
 
