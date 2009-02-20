@@ -1,0 +1,13 @@
+master (unreleased)
+  * Reorganized code a bit. Moving away from monolithic file
+
+  * Backwards incompatible changes!:
+    * Moved everything under the TabTab namespace
+    * Removed the 'active_class' option from helpers. It's easy enough to
+      change CSS to use 'active', or to implement a custom 'tab' helper
+
+v1.1.0 (2009-02-12)
+  * Introduced 'tabs_for' helper for nested tabs
+
+v1.0.0 (2009-02-11)
+  * First version!
