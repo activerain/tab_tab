@@ -2,8 +2,6 @@ require File.join(File.dirname(__FILE__), 'test_helper')
 
 class TabTest < Test::Unit::TestCase
 
-  include TabTab
-
   def test_tab_name_generation_from_literal
     assert_equal 'Home',             Tab[ :home                 ].name
     assert_equal 'Settings',         Tab[ :account => :settings ].name

@@ -2,8 +2,6 @@ require File.join(File.dirname(__FILE__), 'test_helper')
 
 class ControllerMethodsTest < Test::Unit::TestCase
 
-  include TabTab
-
   def test_controller_level_tab
     assert_equal Tab[:stuff], StuffController.new.current_tab
   end
