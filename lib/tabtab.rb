@@ -81,7 +81,7 @@ module TabTab #:nodoc:
       [ html, tab.name, tab_active ].extend TabHelperHelperReturnDecoration
     end
 
-    class TabScope #:nodoc:
+    class Scope #:nodoc:
       attr_accessor :view #:nodoc:
       attr_accessor :path #:nodoc:
 
@@ -101,7 +101,7 @@ module TabTab #:nodoc:
     #   </ul>
     #
     def tabs_for(*tab_literal_scope, &block)
-      scope      = TabScope.new
+      scope      = Scope.new
       scope.path = Tab.new(tab_literal_scope).nested_path
       scope.view = self
 
