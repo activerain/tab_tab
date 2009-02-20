@@ -12,11 +12,10 @@ module TabTab
     # +opts+ can contain:
     # - +:name+: the human name of the tab
     # - +:html+: a hash of HTML attributes (namely :id and :class)
-    # - +:active_class+: the CSS class name you want tacked on active tabs
     #
     def tab(url, tab_literal, opts = nil)
       opts = (opts || {}).to_options
-      opts.assert_valid_keys :active_class, :html, :name
+      opts.assert_valid_keys :html, :name
 
       name = opts.delete :name # tab_helper_helper doesn't like :name
       help = tab_helper_helper(tab_literal, opts)
@@ -32,7 +31,6 @@ module TabTab
     #
     # +opts+ can contain:
     # - +:html+: a hash of HTML attributes (namely :id and :class)
-    # - +:active_class+: the CSS class name you want tacked on active tabs
     #
     # It returns a duck that responds to a few methods:
     # - +html+: A clone of +opts[:html]+ with adjusted +:class+
@@ -41,18 +39,15 @@ module TabTab
     #
     def tab_helper_helper(tab_literal, opts = nil)
       opts = (opts || {}).to_options
-      opts.assert_valid_keys :active_class, :html
+      opts.assert_valid_keys :html
 
       tab          = Tab.new(tab_literal)
       html         = (opts[:html] || {}).to_options
-      active_class = opts[:active_class].blank? ? 'active' \
-                                                : opts[:active_class]
       html[:id]  ||= tab.html_id
       tab_active   = controller.current_tab.activates?(tab)
 
       if tab_active
-        html[:class] = \
-          [ (html[:class] || ''), active_class.to_s ].join(' ').lstrip
+        html[:class] = [ (html[:class] || ''), 'active' ].join(' ').lstrip
       end
 
       [ html, tab.name, tab_active ].extend TabHelperHelperReturnDecoration

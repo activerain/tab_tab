@@ -35,12 +35,6 @@ class ViewTest < Test::Unit::TestCase
       view.link_to('Lower', '/')
     end
 
-    custom_css = view.content_tag(:li, :id => 'stuff_tab',
-      :class => 'here') do
-
-      view.link_to('Stuff', '/')
-    end
-
     custom_name = view.content_tag(:li, :id => 'top_tab') do
       view.link_to('Back Home', '/')
     end
@@ -55,7 +49,6 @@ class ViewTest < Test::Unit::TestCase
 
     assert_equal minimal,     view.tab('/', :top)
     assert_equal nested,      view.tab('/', :top => { :under => :lower })
-    assert_equal custom_css,  view.tab('/', :stuff, :active_class => 'here')
     assert_equal custom_name, view.tab('/', :top,   :name => 'Back Home')
     assert_equal custom_id,   view.tab('/', :top,   :html => { :id => '7p' })
     assert_equal custom_class,
@@ -121,16 +114,6 @@ class ViewTest < Test::Unit::TestCase
 
     assert_equal 'super active', html[:class]
     assert_equal 'bob',               html[:id]
-  end
-
-  def test_of_custom_active_tab_class_name
-    view            = YeOldeView.new
-    view.controller = controller = StuffController.new
-
-    html, literal_name, active_status = view.tab_helper_helper(:stuff,
-      :active_class => 'selected', :html => { :class => 'tab' })
-
-    assert_equal 'tab selected', html[:class]
   end
 
   def test_of_decorated_return_array
