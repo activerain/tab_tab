@@ -1,4 +1,4 @@
-module TabTab #:nodoc:
+module TabTab
   class Tab #:nodoc:
     attr_accessor :nested_path #:nodoc:
 
