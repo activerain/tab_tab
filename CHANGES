@@ -1,8 +1,9 @@
-master (unreleased)
+master (unreleased, subject to change)
   * Reorganized code a bit. Moving away from monolithic file
-
-  * Backwards incompatible changes!:
+  * Backwards incompatible changes!
     * Moved everything under the TabTab namespace
+    * Killed 'tab_helper_helper' in favor of
+      'tab_name_helper' and 'tab_html_helper'.
     * Removed the 'active_class' option from helpers. It's easy enough to
       change CSS to use 'active', or to implement a custom 'tab' helper
 
