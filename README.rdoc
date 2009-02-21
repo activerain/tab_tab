@@ -61,8 +61,7 @@ branch logic based on request parameters), like so:
 
 The +tab+ helper in the view is hardcoded to produce an HTML list element
 with a link inside. Overriding it is easy, since it actually delegates all of
-the who's-the-current-tab logic to the unfortunately named
-+tab_helper_helper+ method (See TabTab::ViewHelpers for more).
+the who's-the-current-tab logic to helper methods (See TabTab::ViewHelpers).
 
 CSS is on you. Patches welcome.
 

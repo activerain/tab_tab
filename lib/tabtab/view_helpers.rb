@@ -1,11 +1,5 @@
 module TabTab
   module ViewHelpers
-    module TabHelperHelperReturnDecoration #:nodoc:
-      def html;    first;  end #:nodoc:
-      def name;    second; end #:nodoc:
-      def active?; third;  end #:nodoc:
-    end
-
     # The tab helper. Draws an HTML list tag with a link inside, linking to
     # the given URL.
     #
@@ -17,40 +11,27 @@ module TabTab
       opts = (opts || {}).to_options
       opts.assert_valid_keys :html, :name
 
-      name = opts.delete :name # tab_helper_helper doesn't like :name
-      help = tab_helper_helper(tab_literal, opts)
+      name = opts[:name] || tab_name_helper(tab_literal)
+      html = tab_html_helper(tab_literal, opts[:html])
 
-      content_tag(:li, help.html) { link_to((name || help.name), url) }
+      content_tag(:li, html) { link_to(name, url) }
     end
 
-    # This helper helper (ugh) method is used by the +tab+ helper to modify
-    # the HTML attributes in case the tab is "active".
-    #
-    # +tab_literal+ is of the same types of literal you pass to the +tab+
-    # method on the controllers.
-    #
-    # +opts+ can contain:
-    # - +:html+: a hash of HTML attributes (namely :id and :class)
-    #
-    # It returns a duck that responds to a few methods:
-    # - +html+: A clone of +opts[:html]+ with adjusted +:class+
-    # - +name+: A human name suggestion for the tab
-    # - +active?+: Returns true if the given tab literal is active right now
-    #
-    def tab_helper_helper(tab_literal, opts = nil)
-      opts = (opts || {}).to_options
-      opts.assert_valid_keys :html
+    def tab_name_helper(tab_literal) #:nodoc:
+      Tab.new(tab_literal).name
+    end
 
-      tab          = Tab.new(tab_literal)
-      html         = (opts[:html] || {}).to_options
-      html[:id]  ||= tab.html_id
-      tab_active   = controller.current_tab.activates?(tab)
+    def tab_html_helper(tab_literal, html = nil) #:nodoc:
+      html = (html || {}).to_options
+      tab  = Tab.new(tab_literal)
 
-      if tab_active
+      if controller.current_tab.activates?(tab)
         html[:class] = [ (html[:class] || ''), 'active' ].join(' ').lstrip
       end
 
-      [ html, tab.name, tab_active ].extend TabHelperHelperReturnDecoration
+      html[:id] ||= tab.html_id
+
+      html
     end
 
     # Use in your views when you need to render several tabs with similar
