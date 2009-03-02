@@ -3,6 +3,8 @@ require 'rake/testtask'
 require 'rubygems'
 
 begin
+  raise LoadError if RUBY_VERSION >= '1.9'
+
   require 'hanna'
   require 'hanna/rdoctask'
 rescue LoadError
