@@ -11,7 +11,6 @@ module TabTab
       opts.assert_valid_keys :html, :name
 
       name = opts[:name] || tab_name_helper(tab_literal)
-
       html = tab_html_attributes_helper(tab_literal, opts[:html])
 
       content_tag(:li, html) { link_to(name, url) }
@@ -19,7 +18,7 @@ module TabTab
 
     # Returns the human name for the given tab literal.
     #
-    def tab_name_helper(tab_literal) #:nodoc:
+    def tab_name_helper(tab_literal)
       Tab.new(tab_literal).name
     end
 
