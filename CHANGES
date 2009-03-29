@@ -3,7 +3,7 @@ master (unreleased, subject to change)
   * Backwards incompatible changes!
     * Moved everything under the TabTab namespace
     * Killed 'tab_helper_helper' in favor of
-      'tab_name_helper' and 'tab_html_helper'.
+      'tab_name_helper' and 'tab_html_attributes_helper'.
     * Removed the 'active_class' option from helpers. It's easy enough to
       change CSS to use 'active', or to implement a custom 'tab' helper
 
