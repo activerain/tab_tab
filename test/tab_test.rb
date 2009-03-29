@@ -3,26 +3,27 @@ require File.join(File.dirname(__FILE__), 'test_helper')
 class TabTest < Test::Unit::TestCase
 
   def test_tab_name_generation_from_literal
-    assert_equal 'Home',             Tab[ :home                 ].name
-    assert_equal 'Settings',         Tab[ :account => :settings ].name
-    assert_equal 'User Preferences', Tab[ :user_preferences     ].name
+    assert_equal 'Home',             Tab.new(:home                ).name
+    assert_equal 'Settings',         Tab.new(:account => :settings).name
+    assert_equal 'User Preferences', Tab.new(:user_preferences    ).name
   end
 
   def test_html_id_generation_from_literal
-    assert_equal 'home_tab',             Tab[ :home                 ].html_id
-    assert_equal 'account_settings_tab', Tab[ :account => :settings ].html_id
-    assert_equal 'user_preferences_tab', Tab[ :user_preferences     ].html_id
+    assert_equal 'home_tab',             Tab.new(:home).html_id
+    assert_equal 'user_preferences_tab', Tab.new(:user_preferences).html_id
+    assert_equal 'account_settings_tab',
+      Tab.new(:account => :settings).html_id
   end
 
   def test_equivalence_of_different_tab_literal_forms
-    assert_equal Tab[ :pictures => :shared  ],
-                 Tab[ 'pictures',  'shared' ]
+    assert_equal Tab.new(:pictures => :shared),
+                 Tab.new('pictures',  'shared')
 
-    assert_equal Tab[ :pictures => { :shared => :organize } ],
-                 Tab[ 'pictures',    'shared',  'organize'  ] 
+    assert_equal Tab.new('pictures' => { :shared => 'organize' }),
+                 Tab.new(:pictures,      'shared',  :organize)
 
-    assert_not_equal Tab[ :pictures => { :shared => :organize } ],
-                     Tab[ 'pictures',   'organize',  'shared'   ] 
+    assert_not_equal Tab.new(:pictures => { :shared => :organize }),
+                     Tab.new('pictures',   'organize',  'shared')
   end
 
   def test_proper_activation_of_ancestor_tabs

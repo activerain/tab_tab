@@ -20,7 +20,6 @@ rescue LoadError
 end unless ENV['TM_BUNDLE_PATH']
 
 class Test::Unit::TestCase
-
   include TabTab
 
   require File.join(File.dirname(__FILE__), 'fixtures', 'ye_olde_view')
@@ -29,7 +28,7 @@ class Test::Unit::TestCase
 
   def assert_activation(tab, *other_tab)
 
-    tab, other_tab = Tab[tab], Tab[other_tab]
+    tab, other_tab = Tab.new(tab), Tab.new(other_tab)
 
     assert_block "#{tab.inspect} does not activate #{other_tab.inspect}" do
       tab.activates? other_tab
@@ -38,7 +37,7 @@ class Test::Unit::TestCase
 
   def assert_no_activation(tab, *other_tab)
 
-    tab, other_tab = Tab[tab], Tab[other_tab]
+    tab, other_tab = Tab.new(tab), Tab.new(other_tab)
 
     assert_block "#{tab.inspect} activates #{other_tab.inspect}" do
       not tab.activates? other_tab

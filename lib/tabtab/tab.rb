@@ -2,10 +2,6 @@ module TabTab
   class Tab #:nodoc:
     attr_accessor :nested_path #:nodoc:
 
-    def self.[](*args, &block) #:nodoc:
-      new *args, &block
-    end
-
     def ==(other) #:nodoc:
       self.nested_path == other.nested_path
     end
