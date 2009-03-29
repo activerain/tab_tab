@@ -1,12 +1,19 @@
 master (unreleased, subject to change)
-  * Reorganized code a bit. Moving away from monolithic file
+
+v2.0.0 (2009-03-29)
   * Backwards incompatible changes!
-    * Moved everything under the TabTab namespace
-    * Killed 'tab_helper_helper' in favor of
-      'tab_name_helper', 'tab_html_attributes_helper', and
-      'test_tab_activaton_status_helper'.
-    * Removed the 'active_class' option from helpers. It's easy enough to
-      change CSS to use 'active', or to implement a custom 'tab' helper
+
+  * Reorganized code a bit. Moving away from monolithic file
+
+  * Moved everything under the TabTab namespace
+
+  * Removed the 'active_class' option from helpers. It's easy enough to
+    change CSS to use 'active', or to implement a custom 'tab' helper
+
+  * Killed 'tab_helper_helper' in favor of
+    'tab_name_helper', 'tab_html_attributes_helper', and
+    'test_tab_activaton_status_helper' for people who can't/won't
+    use the built-in 'tab' helper.
 
 v1.1.0 (2009-02-12)
   * Introduced 'tabs_for' helper for nested tabs
