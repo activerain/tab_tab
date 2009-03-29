@@ -63,7 +63,7 @@ module TabTab
     # tabs, since one is nested under the other.
     #
     def activates?(other)
-      other.nested_path == nested_path[0..other.nested_path.size-1]
+      other.nested_path == self.nested_path[0..other.nested_path.size-1]
     end
   end
 end
