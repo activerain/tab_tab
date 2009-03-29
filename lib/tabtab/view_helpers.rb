@@ -16,6 +16,24 @@ module TabTab
       content_tag(:li, html) { link_to(name, url) }
     end
 
+    # Use in your views when you need to render several tabs with similar
+    # nested levels, like so:
+    #
+    #   <ul id="warehouse_tabs">
+    #     <% tabs_for :warehouse do |warehouse| %>
+    #       <%= warehouse.tab('/foo', :projections) -%>
+    #       <%= warehouse.tab('/bar', :capacity)    -%>
+    #     <% end %>
+    #   </ul>
+    #
+    def tabs_for(*tab_literal_scope, &block)
+      scope      = Scope.new
+      scope.path = Tab.new(tab_literal_scope).nested_path
+      scope.view = self
+
+      block.call scope
+    end
+
     # Returns the human name for the given tab literal.
     #
     # (useful when creating your own +tab+ view helper method).
@@ -41,24 +59,6 @@ module TabTab
       html[:id] ||= tab.html_id
 
       html
-    end
-
-    # Use in your views when you need to render several tabs with similar
-    # nested levels, like so:
-    #
-    #   <ul id="warehouse_tabs">
-    #     <% tabs_for :warehouse do |warehouse| %>
-    #       <%= warehouse.tab('/foo', :projections) -%>
-    #       <%= warehouse.tab('/bar', :capacity)    -%>
-    #     <% end %>
-    #   </ul>
-    #
-    def tabs_for(*tab_literal_scope, &block)
-      scope      = Scope.new
-      scope.path = Tab.new(tab_literal_scope).nested_path
-      scope.view = self
-
-      block.call scope
     end
   end
 end
