@@ -42,6 +42,15 @@ module TabTab
       Tab.new(tab_literal).name
     end
 
+    # Returns true or false depending on whether the given tab literal is
+    # currently active or not.
+    #
+    # (useful when creating your own +tab+ view helper method).
+    #
+    def tab_activaton_status_helper(tab_literal) #:nodoc:
+      controller.current_tab.activates?(Tab.new(tab_literal))
+    end
+
     # Returns the given +html_attributes+ back, with 'active' added to the
     # +:class+ attribute if the given +tab_literal+ is currently active, and
     # with an auto-generated +:id+ attribute if none is provided.
