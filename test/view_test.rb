@@ -52,7 +52,7 @@ class ViewTest < Test::Unit::TestCase
     end
 
     active_nav = v.content_tag(:li, :id => 'stuff_tab',
-      :class => 'nav active') do
+      :class => 'active nav') do
 
       v.link_to('Stuff', '/')
     end
