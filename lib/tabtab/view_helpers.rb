@@ -18,6 +18,8 @@ module TabTab
 
     # Returns the human name for the given tab literal.
     #
+    # (useful when creating your own +tab+ view helper).
+    #
     def tab_name_helper(tab_literal)
       Tab.new(tab_literal).name
     end
@@ -25,6 +27,8 @@ module TabTab
     # Returns the given +html_attributes+ back, with 'active' added to the
     # +:class+ attribute if the given +tab_literal+ is currently active, and
     # with an auto-generated +:id+ attribute if none is provided.
+    #
+    # (useful when creating your own +tab+ view helper).
     #
     def tab_html_attributes_helper(tab_literal, html_attributes = {})
       html = (html_attributes || {}).to_options
