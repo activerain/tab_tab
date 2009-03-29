@@ -1,5 +1,0 @@
-require 'tabtab/controller_instance_methods'
-require 'tabtab/controller_methods'
-require 'tabtab/scope'
-require 'tabtab/tab'
-require 'tabtab/view_helpers'

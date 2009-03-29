@@ -1,4 +1,8 @@
 master (unreleased, subject to change)
+  * Potentially backwards incompatible changes:
+    - All 'tabtab' references have been renamed to 'tab_tab', should not
+      really affect your code if it just uses tab_tab as a Rails plugin,
+      even if you wrote your own 'tab' method.
 
 v2.0.0 (2009-03-29)
   * Backwards incompatible changes!

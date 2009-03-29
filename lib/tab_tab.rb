@@ -1,0 +1,5 @@
+require 'tab_tab/controller_instance_methods'
+require 'tab_tab/controller_methods'
+require 'tab_tab/scope'
+require 'tab_tab/tab'
+require 'tab_tab/view_helpers'

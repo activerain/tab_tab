@@ -1,4 +1,4 @@
-require 'tabtab'
+require 'tab_tab'
 
 class ActionController::Base
 
