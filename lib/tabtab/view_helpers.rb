@@ -1,28 +1,34 @@
 module TabTab
   module ViewHelpers
-    # The tab helper. Draws an HTML list tag with a link inside, linking to
-    # the given URL.
+    # Draws an HTML list tag with a link inside, linking to the given URL.
     #
     # +opts+ can contain:
     # - +:name+: the human name of the tab
     # - +:html+: a hash of HTML attributes (namely :id and :class)
     #
-    def tab(url, tab_literal, opts = nil)
+    def tab(url, tab_literal, opts = {})
       opts = (opts || {}).to_options
       opts.assert_valid_keys :html, :name
 
       name = opts[:name] || tab_name_helper(tab_literal)
-      html = tab_html_helper(tab_literal, opts[:html])
+
+      html = tab_html_attributes_helper(tab_literal, opts[:html])
 
       content_tag(:li, html) { link_to(name, url) }
     end
 
+    # Returns the human name for the given tab literal.
+    #
     def tab_name_helper(tab_literal) #:nodoc:
       Tab.new(tab_literal).name
     end
 
-    def tab_html_helper(tab_literal, html = nil) #:nodoc:
-      html = (html || {}).to_options
+    # Returns the given +html_attributes+ back, with 'active' added to the
+    # +:class+ attribute if the given +tab_literal+ is currently active, and
+    # with an auto-generated +:id+ attribute if none is provided.
+    #
+    def tab_html_attributes_helper(tab_literal, html_attributes = {})
+      html = (html_attributes || {}).to_options
       tab  = Tab.new(tab_literal)
 
       if controller.current_tab.activates?(tab)

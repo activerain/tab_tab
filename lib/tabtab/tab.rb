@@ -36,7 +36,7 @@ module TabTab
       end
     end
 
-    # Returns the auto-generated HTML id for the tab element, by joining
+    # Returns the auto-generated HTML id for the tab html element, by joining
     # the nested tab IDs with underscores, and adding '_tab' at the end.
     #
     def html_id
@@ -44,21 +44,23 @@ module TabTab
     end
 
     # Returns the auto-generated name (caption) for a tab, inferring it from
-    # the deepest part of a nested tab identifier.
+    # the last part of a nested tab literal.
     #
     def name
       self.nested_path.last.titlecase
     end
 
-    # Deep, nested tabs activate themselves, and their ancestors. For example:
+    # Deep, nested tabs activate themselves and their parents. For example:
     #
-    # users_tab    = Tab.new :users
-    # inactive_tab = Tab.new :users => :inactive
+    # messages_tab = Tab.new :messages
+    # unread_tab   = Tab.new :messages => :unread
     #
-    # inactive_tab.activates?(users_tab) => true
+    # unread_tab.activates?(unread_tab)   => true
+    # unread_tab.activates?(messages_tab) => true
     #
-    # The idea being that when the current tab is that of inactive users, both
-    # the inactive users tab and the users tab will appear as the current tab.
+    # The idea being that when the current tab is the 'unread messages' one,
+    # both the unread messages tab and the messages tab will appear as active
+    # tabs, since one is nested under the other.
     #
     def activates?(other)
       other.nested_path == nested_path[0..other.nested_path.size-1]
