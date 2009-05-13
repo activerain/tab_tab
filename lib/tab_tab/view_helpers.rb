@@ -17,21 +17,29 @@ module TabTab
     end
 
     # Use in your views when you need to render several tabs with similar
-    # nested levels, like so:
+    # nested levels.  Doesn't display nested tabs unless the parent is
+    # currently active. 
     #
     #   <ul id="warehouse_tabs">
     #     <% tabs_for :warehouse do |warehouse| %>
     #       <%= warehouse.tab('/foo', :projections) -%>
     #       <%= warehouse.tab('/bar', :capacity)    -%>
     #     <% end %>
+    #     <% tabs_for :about do |about| %>
+    #       <%= about.tab('/about_us', :about) -%>
+    #       <%= about.tab('/contact_us', :contact)    -%>
+    #     <% end %>
     #   </ul>
     #
     def tabs_for(*tab_literal_scope, &block)
+      tab        = Tab.new(tab_literal_scope)
       scope      = Scope.new
-      scope.path = Tab.new(tab_literal_scope).nested_path
+      scope.path = tab.nested_path
       scope.view = self
 
-      block.call scope
+      if controller.current_tab.activates?(tab)
+        block.call scope
+      end
     end
 
     # Returns the human name for the given tab literal.
